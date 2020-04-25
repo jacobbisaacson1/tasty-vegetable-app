@@ -8,11 +8,14 @@ vegs = Blueprint('vegs', 'vegs')
 # dont forget!  this is GET route (/api/v1/vegs)
 @vegs.route('/', methods=['GET'])
 def vegs_index():
-  result = models.Veg.select()
-  veggies = [veg.name for veg in result]
-
+  result = models.Veg.select().dicts()
+  # veggies = [veg.name for veg in result]
   print('this is result -->', result)
-  return jsonify(veggies)
+  return jsonify(
+    data = [veg for veg in result],
+    message = 'Getting Veggies',
+    status = 200
+  )
 
 # CREATE
 # POST route /api/v1/vegs/ (don't forget slash at the end for POST)
