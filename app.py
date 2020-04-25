@@ -1,5 +1,6 @@
 # from flask import Flask
 from flask import Flask, jsonify
+import models
 
 DEBUG=True
 PORT=8000
@@ -30,26 +31,12 @@ def likes_veg(username):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# DONT FORGOT TO pip install Flask !!!!!
-
 if __name__ == '__main__':
-	app.run(debug=DEBUG, port=PORT)
+  models.initialize()
+  app.run(debug=DEBUG, port=PORT)
+
+
+
+
+
+
