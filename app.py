@@ -14,6 +14,15 @@ def hello():
 def get_veg_json():
 	return jsonify(name="Carrot", color="Orange", isTasty=True)
 
+@app.route('/nested_json')
+def get_nested_json():
+	carrot = {
+		'name': 'Carrot',
+		'color': 'Orange',
+		'isTasty': True
+	}
+	return jsonify(name="Jacob", likesVeg=True, veg=carrot)
+
 
 
 
