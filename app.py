@@ -24,6 +24,11 @@ def get_nested_json():
 	return jsonify(name="Jacob", likesVeg=True, veg=carrot)
 
 
+@app.route('/likes_veg/<username>')
+def likes_veg(username):
+	return "You better like vegetables {}!".format(username)
+
+
 
 
 
