@@ -9,7 +9,7 @@ DATABASE = SqliteDatabase('vegs.sqlite')
 class Veg(Model):
 	name = CharField()
 	color = CharField()
-	isTasty = Boolean()
+	isTasty = BooleanField()
 	created_at: DateTimeField(default=datetime.datetime.now)
 
 	class Meta:
