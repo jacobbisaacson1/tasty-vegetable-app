@@ -1,5 +1,4 @@
 import models
-
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
 
@@ -37,6 +36,21 @@ def create_veg():
     message="created(post) veg",
     status=201
   ), 201
+
+# Destroy
+@vegs.route('/<id>', methods=['DELETE'])
+def delete_veg(id):
+  delete_query = models.Veg.delete().where(models.Veg.id == id)
+  num_of_rows_deleted = delete_query.execute()
+  print(num_of_rows_deleted)
+  return jsonify(
+    data={},
+    message="successfully deleted {} veg with id {}".format(num_of_rows_deleted, id),
+    status=200
+  ), 200
+
+# Update 
+@vegs.route('/<id>', methods)
 
   
 

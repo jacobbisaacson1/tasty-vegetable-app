@@ -1,12 +1,15 @@
-# from flask import Flask
 from flask import Flask, jsonify
 from resources.vegs import vegs
 import models
+from flask_cors import CORS
+
 
 DEBUG=True
 PORT=8000
 
 app = Flask(__name__)
+
+CORS(vegs, origins=['http://localhost3000:'], supports_credentials=True)
 # blueprint
 app.register_blueprint(vegs, url_prefix='/api/v1/vegs')
 
