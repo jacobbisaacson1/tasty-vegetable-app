@@ -1,5 +1,3 @@
-# print('importing correctly from models.py')
-
 from peewee import *
 import datetime
 
@@ -9,7 +7,7 @@ DATABASE = SqliteDatabase('vegs.sqlite')
 class Veg(Model):
 	name = CharField()
 	color = CharField()
-	isTasty = BooleanField()
+	isTasty = CharField()
 	created_at: DateTimeField(default=datetime.datetime.now)
 
 	class Meta:

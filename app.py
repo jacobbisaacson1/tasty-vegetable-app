@@ -34,7 +34,6 @@ def likes_veg(username):
 	return "You better like vegetables {}!".format(username)
 
 
-
 if __name__ == '__main__':
   models.initialize()
   app.run(debug=DEBUG, port=PORT)

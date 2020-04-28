@@ -54,7 +54,7 @@ def delete_veg(id):
 # Update 
 @vegs.route('/<id>', methods=['PUT'])
 def update_veg(id):
-  payload = request.get.json()
+  payload = request.get_json()
   update_query = models.Veg.update(
     name=payload['name'],
     color=payload['color'],
