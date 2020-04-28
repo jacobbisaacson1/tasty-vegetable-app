@@ -33,7 +33,7 @@ def create_veg():
   veg_dict = model_to_dict(new_veg)
   return jsonify(
     data=veg_dict,
-    message="created(post) veg",
+    message=f"successfully CREATED veg",
     status=201
   ), 201
 
@@ -45,12 +45,29 @@ def delete_veg(id):
   print(num_of_rows_deleted)
   return jsonify(
     data={},
-    message="successfully deleted {} veg with id {}".format(num_of_rows_deleted, id),
+    message="successfully DELETED {} veg with id {}".format(num_of_rows_deleted, id),
     status=200
   ), 200
 
 # Update 
-# @vegs.route('/<id>', methods)
+@vegs.route('/<id>', methods=['PUT'])
+def update_veg(id):
+  payload = request.get.json()
+  update_query = models.Veg.update(
+    name=payload['name'],
+    color=payload['color'],
+    isTasty=payload['isTasty']
+  ).where(models.Veg.id == id)
+
+  num_of_rows_modified = update_query.execute()
+  updated_veg = models.Veg.get_by_id(id)
+  updated_veg_dict = model_to_dict(updated_veg)
+
+  return jsonify(
+    data=updated_veg_dict,
+    message=f"successfully UPDATED veg with id {id}",
+    status=200
+  ), 200
 
   
 
