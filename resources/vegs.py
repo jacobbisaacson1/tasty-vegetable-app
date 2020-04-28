@@ -50,7 +50,7 @@ def delete_veg(id):
   ), 200
 
 # Update 
-@vegs.route('/<id>', methods)
+# @vegs.route('/<id>', methods)
 
   
 
