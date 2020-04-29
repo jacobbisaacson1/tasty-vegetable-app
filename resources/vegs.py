@@ -1,23 +1,25 @@
 import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 vegs = Blueprint('vegs', 'vegs')
 
 # dont forget!  this is GET route (/api/v1/vegs)
 @vegs.route('/', methods=['GET'])
+@login_required
 def vegs_index():
-  result = models.Veg.select()
-  veg_dicts = [model_to_dict(veg) for veg in result]
-  for veg_dict in veg_dicts:
+  # result = models.Veg.select()
+  current_user_veg_dicts = [model_to_dict(veg) for veg in current_user.vegs]
+  # veg_dicts = [model_to_dict(veg) for veg in result]
+  for veg_dict in current_user_veg_dicts:
     veg_dict['owner'].pop('password')
-  print(veg_dicts)
+  print(current_user_veg_dicts)
   # veggies = [veg.name for veg in result]
   print('this is result -->', result)
   return jsonify({
-    'data': veg_dicts,
-    'message': f"Successfully found {len(veg_dicts)} vegs",
+    'data': current_user_veg_dicts,
+    'message': f"Successfully found {len(current_user_veg_dicts)} vegs",
     'status': 200
   }), 200
 
