@@ -1,6 +1,6 @@
 import models 
 
-from flask import Blueprint, request 
+from flask import Blueprint, request, jsonify
 from flask_bcrypt import generate_password_hash
 
 users = Blueprint('users', 'users')
@@ -19,6 +19,11 @@ def register():
 
   try:
     models.User.get(models.User.email == payload['email'])
+    return jsonify(
+      data={},
+      message="A user with that email already exists",
+      status=401
+    ), 401
   except models.DoesNotExist:
     pw_hash = generate_password_hash(payload['password'])
     created_user = models.User.create(
