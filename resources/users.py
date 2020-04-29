@@ -3,7 +3,7 @@ import models
 from flask import Blueprint, request, jsonify
 from flask_bcrypt import generate_password_hash, check_password_hash
 from playhouse.shortcuts import model_to_dict
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user
 
 users = Blueprint('users', 'users')
 
@@ -58,6 +58,8 @@ def login():
     password_is_good = check_password_hash(user_dict['password'], payload['password'])
     if(password_is_good):
       login_user(user)
+      print(f"{current_user.username} is current_user.username in POST login")
+      print(model_to_dict(user))
       user_dict.pop('password')
       return jsonify(
         data=user_dict,
@@ -92,10 +94,20 @@ def user_index():
 @users.route('/logged_in_user', methods=['GET'])
 def get_logged_in_user():
   print(current_user)
+  print(f"{current_user.username} is current_user.username in GET logged_in_user")
   user_dict = model_to_dict(current_user)
   user_dict.pop('password')
 
   return jsonify(data=user_dict), 200
+
+@users.route('/logout', methods=['GET'])
+def logout():
+  logout_user()
+  return jsonify(
+    data={},
+    message="successfully LOGGED OUT",
+    status=200
+  ), 200
 
 
 
