@@ -64,6 +64,14 @@ def login():
         message=f"successfully LOGGED IN {user_dict['email']}",
         status=200
       ), 200
+    else:
+      print('password is no good')
+      return jsonify(
+        data={},
+        message="email or password is incorrect",
+        status=401
+      ), 401
+      
   except models.DoesNotExist:
     print('username no good')
     return jsonify(
