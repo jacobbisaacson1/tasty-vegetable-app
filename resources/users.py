@@ -58,7 +58,6 @@ def login():
     password_is_good = check_password_hash(user_dict['password'], payload['password'])
     if(password_is_good):
       login_user(user)
-      print(f"{current_user.username} is current_user.username in POST login")
       print(model_to_dict(user))
       user_dict.pop('password')
       return jsonify(
@@ -94,11 +93,21 @@ def user_index():
 @users.route('/logged_in_user', methods=['GET'])
 def get_logged_in_user():
   print(current_user)
-  print(f"{current_user.username} is current_user.username in GET logged_in_user")
-  user_dict = model_to_dict(current_user)
-  user_dict.pop('password')
+  if not current_user.is_authenticated: 
+    return jsonify(
+      data={},
+      message="No user is currently logged in",
+      status=401,
+    ), 401
+  else:
+    user_dict = model_to_dict(current_user)
+    user_dict.pop('password')
+    return jsonify(
+      data=user_dict,
+      message=f"Currently logged in as {user_dict['email']}.",
+      status=200
+    ), 200
 
-  return jsonify(data=user_dict), 200
 
 @users.route('/logout', methods=['GET'])
 def logout():
