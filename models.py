@@ -4,6 +4,13 @@ from flask_login import UserMixin
 
 DATABASE = SqliteDatabase('vegs.sqlite')
 
+class User(UserMixin, Model):
+  username=CharField(unique=True)
+  email=CharField(unique=True)
+  password=CharField()
+
+  class Meta:
+    database = DATABASE
 
 class Veg(Model):
 	name = CharField()
@@ -13,14 +20,6 @@ class Veg(Model):
 
 	class Meta:
 		database = DATABASE
-
-class User(UserMixin, Model):
-  username=CharField(unique=True)
-  email=CharField(unique=True)
-  password=CharField()
-
-  class Meta:
-    database = DATABASE
 
 
 def initialize():
