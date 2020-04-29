@@ -22,7 +22,7 @@ def register():
     models.User.get(models.User.email == payload['email'])
     return jsonify(
       data={},
-      message="A user with that email already exists",
+      message=f"A user with the email {payload['email']} already exists",
       status=401
     ), 401
   except models.DoesNotExist:
@@ -40,7 +40,7 @@ def register():
 
     return jsonify(
       data=created_user_dict,
-      message="successfully REGISTERED user",
+      message=f"successfully REGISTERED user {created_user_dict['email']}",
       status=201
     ), 201
 
