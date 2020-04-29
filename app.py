@@ -1,16 +1,24 @@
 from flask import Flask, jsonify
 from resources.vegs import vegs
+from resources.users import users
 import models
 from flask_cors import CORS
+from flask_login import LoginManager
 
 DEBUG=True
 PORT=8000
 
 app = Flask(__name__)
 
+app.secret_key = "super secret pizza party."
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 CORS(vegs, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
 # blueprint
 app.register_blueprint(vegs, url_prefix='/api/v1/vegs')
+app.register_blueprint(users, url_prefix='/api/v1/users')
 
 @app.route('/')
 def hello():
