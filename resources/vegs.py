@@ -1,6 +1,7 @@
 import models
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
+from flask_login import current_user
 
 vegs = Blueprint('vegs', 'vegs')
 
@@ -9,6 +10,8 @@ vegs = Blueprint('vegs', 'vegs')
 def vegs_index():
   result = models.Veg.select()
   veg_dicts = [model_to_dict(veg) for veg in result]
+  for veg_dict in veg_dicts:
+    veg_dict['owner'].pop('password')
   print(veg_dicts)
   # veggies = [veg.name for veg in result]
   print('this is result -->', result)
